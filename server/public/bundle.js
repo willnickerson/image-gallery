@@ -54,9 +54,21 @@
 	
 	var _components2 = _interopRequireDefault(_components);
 	
+	var _services = __webpack_require__(22);
+	
+	var _services2 = _interopRequireDefault(_services);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_angular2.default.module('myApp', [_components2.default]);
+	var app = _angular2.default.module('myApp', [_components2.default, _services2.default]);
+	
+	var dev = 'http://localhost:3000/api';
+	
+	app.value('apiUrl', dev);
+	
+	app.factory('apiUrl', function () {
+	    return dev;
+	});
 
 /***/ },
 /* 1 */
@@ -33013,12 +33025,14 @@
 	};
 	
 	
-	function controller() {
-	    this.images = [{
-	        title: 'Bunny',
-	        url: 'http://f.cl.ly/items/3g3J1G0w122M360w380O/3726490195_f7cc75d377_o.jpg',
-	        description: 'A cute bunny.'
-	    }];
+	controller.$inject = ['imageService'];
+	
+	function controller(images) {
+	    var _this = this;
+	
+	    images.get().then(function (images) {
+	        _this.images = images;
+	    });
 	
 	    this.styles = _imageApp4.default;
 	}
@@ -33140,6 +33154,85 @@
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"thumbnail":"_11T7qyV23K_HJKWVsGU9lU"};
+
+/***/ },
+/* 21 */,
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _angular = __webpack_require__(1);
+	
+	var _angular2 = _interopRequireDefault(_angular);
+	
+	var _camelcase = __webpack_require__(4);
+	
+	var _camelcase2 = _interopRequireDefault(_camelcase);
+	
+	var _path = __webpack_require__(5);
+	
+	var _path2 = _interopRequireDefault(_path);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var context = __webpack_require__(23);
+	
+	var _module = _angular2.default.module('services', []);
+	
+	context.keys().forEach(function (key) {
+	    var name = (0, _camelcase2.default)(_path2.default.basename(key, '.js'));
+	    _module.factory(name, context(key).default);
+	});
+	
+	exports.default = _module.name;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./image-service.js": 24
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 23;
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = imageService;
+	imageService.$inject = ['$http', 'apiUrl'];
+	
+	function imageService($http, apiUrl) {
+	    return {
+	        get: function get() {
+	            return $http.get(apiUrl + '/images').then(function (res) {
+	                return res.data;
+	            });
+	        }
+	    };
+	}
 
 /***/ }
 /******/ ]);
