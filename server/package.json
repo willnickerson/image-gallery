@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "pretest": "eslint .",
     "test": "MONGODB_URI=mongodb://localhost/image-gallery-test mocha",
     "test:watch": "MONGODB_URI=mongodb://localhost/image-gallery-test nodemon --exec mocha",
     "start": "nodemon server.js"

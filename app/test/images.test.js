@@ -1,39 +1,45 @@
-// describe('image-app component', () => {
-//     const {assert} = chai;
+describe('image-app component', () => {
+    const {assert} = chai;
 
-//     beforeEach(
-//         angular.mock.module('components')
-//     );
+    angular.mock.module.sharedInjector();
 
-//     let $component = null;
+    before(
+        angular.mock.module('components')
+    );
 
-//     beforeEach(angular.mock.inject($componentController => {
-//         $component = $componentController;
-//     }));
+    let $component = null;
 
-//     describe('create component', () => {
-//         const images = [
-//             {title: 'test1', url:'http://placehold.it/350x150', description:' Its a test'},
-//             {title: 'test2', url:'http://placehold.it/500x500', description: 'It is also a test'}
-//         ];
+    before(angular.mock.inject($componentController => {
+        $component = $componentController;
+    }));
 
-//         const imageService = {
-//             get() {
-//                 return Promise.resolve(images);
-//             }
-//         };
+    describe('create component', () => {
 
-//         const component = $component('images', {imageService});
+        const images = [
+            {title: 'test1', url:'http://placehold.it/350x150', description:' Its a test'},
+            {title: 'test2', url:'http://placehold.it/500x500', description: 'It is also a test'}
+        ];
 
-//         it('loads images', done => {
-//             assert.isOk(component.loading);
+        const imageService = {
+            get() {
+                return Promise.resolve(images);
+            }
+        };
 
-//             setTimeout(() => {
-//                 assert.equal(component.images, images);
-//                 assert.isNotOk(component.loading);
-//                 done();
-//             });
-//         });
-//     });
-// });
+        let component = null;
+        before(() => {
+            component = $component('imageApp', {imageService});
+        });
+
+        it('loads images', done => {
+            assert.isOk(component.loading);
+
+            setTimeout(() => {
+                assert.equal(component.images, images);
+                assert.isNotOk(component.loading);
+                done();
+            });
+        });
+    });
+});
 
