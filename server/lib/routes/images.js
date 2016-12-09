@@ -6,6 +6,7 @@ const Image = require('../models/image');
 router
     .get('/', (req, res, next) => {
         Image.find()
+            .select('title url description')
             .then(images => res.send(images))
             .catch(next);
     })

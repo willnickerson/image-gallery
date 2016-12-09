@@ -9,10 +9,12 @@ export default {
 controller.$inject = ['imageService'];
 
 function controller(images) {
+    this.loading = true;
+    this.styles = styles;
 
     images.get().then(images => {
+        this.loading = false;
         this.images = images;
     });
     
-    this.styles = styles;
 }

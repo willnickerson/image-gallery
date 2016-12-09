@@ -33030,18 +33030,20 @@
 	function controller(images) {
 	    var _this = this;
 	
+	    this.loading = true;
+	    this.styles = _imageApp4.default;
+	
 	    images.get().then(function (images) {
+	        _this.loading = false;
 	        _this.images = images;
 	    });
-	
-	    this.styles = _imageApp4.default;
 	}
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul class=\"descriptions\">\n    <h2>Descriptions</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-description\n            image=\"image\">\n        </image-description>\n    </li>\n</ul>\n\n<ul class=\"thumbnails\">\n    <h2>Thumbnails</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-thumbnail\n            image=\"image\">\n        </image-thumbnail>\n    </li>\n</ul>\n\n<ul class=\"full-image\">\n    <h2>Full Images</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-full\n            image=\"image\">\n        </image-full>\n    </li>\n</ul>\n\n";
+	module.exports = "<select name=\"filter\" ng-model=\"view\">\n    <option value=\"\">Select your view</option>\n    <option value=\"description\">description</option>\n    <option value=\"thumbnail\">thumbnail</option>\n    <option value=\"full-size\">full-size</option>\n</select>\n<h1>{{view}}</h1>\n<div ng-if=\"app.loading\">Loading...</div>\n\n<ul class=\"descriptions\" ng-if=\"view === 'description' || view == null\">\n    <h2>Descriptions</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-description\n            image=\"image\">\n        </image-description>\n    </li>\n</ul>\n\n<ul class=\"thumbnails\" ng-if=\"view === 'thumbnail' || view == null\">\n    <h2>Thumbnails</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-thumbnail\n            image=\"image\">\n        </image-thumbnail>\n    </li>\n</ul>\n\n<ul class=\"full-image\" ng-if=\"view === 'full-size' || view == null\">\n    <h2>Full Images</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-full\n            image=\"image\">\n        </image-full>\n    </li>\n</ul>\n\n";
 
 /***/ },
 /* 10 */
