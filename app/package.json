@@ -20,6 +20,7 @@
   "homepage": "https://github.com/willnickerson/image-gallery#readme",
   "dependencies": {
     "angular": "^1.5.9",
+    "angular-ui-router": "^1.0.0-beta.3",
     "camelcase": "^4.0.0"
   },
   "devDependencies": {
