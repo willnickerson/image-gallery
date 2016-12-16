@@ -33532,13 +33532,21 @@
 	        _this.loading = false;
 	        _this.images = images;
 	    });
+	
+	    this.remove = function (image) {
+	        images.remove(image._id).then(function () {
+	            _this.loading = false;
+	            var index = _this.imageses.indexOf(image);
+	            if (index > -1) _this.images.splice(index, 1);
+	        });
+	    };
 	}
 
 /***/ },
 /* 21 */
 /***/ function(module, exports) {
 
-	module.exports = "<select name=\"filter\" ng-model=\"view\">\n    <option value=\"\">Select your view</option>\n    <option value=\"description\">description</option>\n    <option value=\"thumbnail\">thumbnail</option>\n    <option value=\"full-size\">full-size</option>\n</select>\n<!--<view-filter \n    view = \"app.view\">\n<view-filter>-->\n\n\n<div ng-if=\"app.loading\">Loading...</div>\n\n<ul class=\"descriptions\" ng-if=\"view === 'description' || view == null\">\n    <h2>Descriptions</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-description\n            image=\"image\">\n        </image-description>\n    </li>\n</ul>\n\n<ul class=\"thumbnails\" ng-if=\"view === 'thumbnail' || view == null\">\n    <h2>Thumbnails</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-thumbnail\n            image=\"image\">\n        </image-thumbnail>\n    </li>\n</ul>\n\n<ul class=\"full-image\" ng-if=\"view === 'full-size' || view == null\">\n    <h2>Full Images</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-full\n            image=\"image\">\n        </image-full>\n    </li>\n</ul>\n\n";
+	module.exports = "<select name=\"filter\" ng-model=\"view\">\n    <option value=\"\">Select your view</option>\n    <option value=\"description\">description</option>\n    <option value=\"thumbnail\">thumbnail</option>\n    <option value=\"full-size\">full-size</option>\n</select>\n<!--<view-filter \n    view = \"app.view\">\n<view-filter>-->\n\n\n<div ng-if=\"app.loading\">Loading...</div>\n\n<ul class=\"descriptions\" ng-if=\"view === 'description' || view == null\">\n    <h2>Descriptions</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-description\n            image=\"image\">\n        </image-description>\n    </li>\n</ul>\n\n<ul class=\"thumbnails\" ng-if=\"view === 'thumbnail' || view == null\">\n    <h2>Thumbnails</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-thumbnail\n            image=\"image\"\n            remove=\"app.remove\">\n        </image-thumbnail>\n    </li>\n</ul>\n\n<ul class=\"full-image\" ng-if=\"view === 'full-size' || view == null\">\n    <h2>Full Images</h2>\n    <li ng-repeat=\"image in app.images\">\n        <image-full\n            image=\"image\">\n        </image-full>\n    </li>\n</ul>\n\n";
 
 /***/ },
 /* 22 */
@@ -33755,18 +33763,28 @@
 	exports.default = {
 	    template: _imageThumbnail2.default,
 	    bindings: {
-	        image: '='
+	        image: '=',
+	        remove: '<'
 	    },
-	    controller: function controller() {
-	        this.styles = _imageThumbnail4.default;
-	    }
+	    controller: controller
 	};
+	
+	
+	function controller() {
+	    var _this = this;
+	
+	    this.styles = _imageThumbnail4.default;
+	
+	    this.delete = function () {
+	        _this.remove(_this.image);
+	    };
+	}
 
 /***/ },
 /* 33 */
 /***/ function(module, exports) {
 
-	module.exports = "<img src=\"{{$ctrl.image.url}}\" ng-class=\"$ctrl.styles.thumbnail\">\n";
+	module.exports = "<img src=\"{{$ctrl.image.url}}\" ng-class=\"$ctrl.styles.thumbnail\">\n<button ng-if=\"$ctrl.remove\" ng-click=\"$ctrl.delete()\">Remove</button>";
 
 /***/ },
 /* 34 */
@@ -33948,6 +33966,16 @@
 	    return {
 	        get: function get() {
 	            return $http.get(apiUrl + '/images').then(function (res) {
+	                return res.data;
+	            });
+	        },
+	        remove: function remove(id) {
+	            return $http.delete(apiUrl + '/images/' + id).then(function (res) {
+	                return res.data;
+	            });
+	        },
+	        add: function add(pirate) {
+	            return $http.post(apiUrl + '/images', pirate).then(function (res) {
 	                return res.data;
 	            });
 	        }

@@ -10,6 +10,11 @@ router
             .then(images => res.send(images))
             .catch(next);
     })
+    .delete('/:id', (req, res, next) => {
+        Image.findByIdAndRemove(req.params.id)
+            .then(deleted => res.send(deleted))
+            .catch(next);
+    })
     .post('/', bodyParser, (req, res, next) => {
         console.log('in post route');
         new Image(req.body).save()

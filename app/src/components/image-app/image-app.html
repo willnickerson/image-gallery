@@ -24,7 +24,8 @@
     <h2>Thumbnails</h2>
     <li ng-repeat="image in app.images">
         <image-thumbnail
-            image="image">
+            image="image"
+            remove="app.remove">
         </image-thumbnail>
     </li>
 </ul>
@@ -37,4 +38,6 @@
         </image-full>
     </li>
 </ul>
+
+<image-add fields="title, description, url" add="app.add"></image-add>
 
