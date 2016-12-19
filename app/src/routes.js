@@ -45,5 +45,11 @@ export default function routes($stateProvider, $urlRouterProvider) {
         }
     });
 
+    $stateProvider.state({
+        name: 'albums',
+        url: '/albums',
+        component: 'albums'
+    });
+
     $urlRouterProvider.otherwise('/');
 }

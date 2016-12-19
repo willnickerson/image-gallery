@@ -1,0 +1,14 @@
+<section>
+    <div class="loader" ng-if="$ctrl.loading">...Loading</div>
+    <h2>Albums</h2>
+
+    <ul>
+        <li ng-repeat="album in $ctrl.albums">
+            <album 
+                album="album">
+            </album>
+        </li>
+    </ul>
+</section>
+
+
