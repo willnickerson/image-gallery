@@ -4,11 +4,13 @@ import services from './services';
 import './scss/main.scss';
 import uiRouter from 'angular-ui-router';
 import routes from './routes';
+import defaultRoute from 'angular-ui-router-default';
 
 const app = angular.module('myApp', [
     components,
     services,
-    uiRouter
+    uiRouter,
+    defaultRoute
 ]);
 
 const dev = 'http://localhost:3000/api';

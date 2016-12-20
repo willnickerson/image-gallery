@@ -6,7 +6,7 @@ const Image = require('../models/image');
 router
     .get('/', (req, res, next) => {
         Image.find()
-            .select('title url description')
+            .select('title url description album')
             .then(images => res.send(images))
             .catch(next);
     })
@@ -20,6 +20,14 @@ router
         new Image(req.body).save()
             .then(image => res.send(image))
             .catch(next);
+    })
+    .put('/:imgId/albums/:albumId', (req, res, next) => {
+        Image.findById(req.params.imgId)
+            .then(image => {
+                image.album = req.params.albumId;
+                return image.save();
+            })
+            .then(saved => res.send(saved))
+            .catch(next);
     });
-
 module.exports = router;

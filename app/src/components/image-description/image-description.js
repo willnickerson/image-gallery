@@ -4,7 +4,7 @@ import styles from './image-description.scss';
 export default {
     template,
     bindings: {
-        image: '='
+        images: '<'
     },
     controller() {
         this.styles = styles;

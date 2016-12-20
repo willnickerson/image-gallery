@@ -1,43 +1,12 @@
-<select name="filter" ng-model="view">
-    <option value="">Select your view</option>
-    <option value="description">description</option>
-    <option value="thumbnail">thumbnail</option>
-    <option value="full-size">full-size</option>
-</select>
-<!--<view-filter 
-    view = "app.view">
-<view-filter>-->
-
-
-<div ng-if="app.loading">Loading...</div>
-
-<ul class="descriptions" ng-if="view === 'description' || view == null">
-    <h2>Descriptions</h2>
-    <li ng-repeat="image in app.images">
-        <image-description
-            image="image">
-        </image-description>
-    </li>
+<ul>
+    <a class="view-toggle" ng-click="app.setView('description')">Descritption</a>
+    <a class="view-toggle" ng-click="app.setView('thumbnail')">Thumbnail</a>
+    <a class="view-toggle" ng-click="app.setView('full')">Full-Size</a>
 </ul>
 
-<ul class="thumbnails" ng-if="view === 'thumbnail' || view == null">
-    <h2>Thumbnails</h2>
-    <li ng-repeat="image in app.images">
-        <image-thumbnail
-            image="image"
-            remove="app.remove">
-        </image-thumbnail>
-    </li>
-</ul>
-
-<ul class="full-image" ng-if="view === 'full-size' || view == null">
-    <h2>Full Images</h2>
-    <li ng-repeat="image in app.images">
-        <image-full
-            image="image">
-        </image-full>
-    </li>
-</ul>
+<section>
+    <ui-view></ui-view>
+</section>
 
 <image-add fields="title, description, url" add="app.add"></image-add>
 

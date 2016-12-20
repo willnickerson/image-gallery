@@ -3,9 +3,13 @@ import template from './album.html';
 export default {
     template,
     bindings: {
-        album: '=',
+        album: '<',
     },
     controller
 };
 
-function controller() {}
+function controller() {
+    this.uiOnParamsChanged = params => {
+        this.view = params.view;
+    };
+}

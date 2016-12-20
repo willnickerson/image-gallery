@@ -3,10 +3,11 @@
     <h2>Albums</h2>
 
     <ul>
-        <li ng-repeat="album in $ctrl.albums">
-            <album 
-                album="album">
-            </album>
+        <li ng-repeat="album in $ctrl.albums"
+            ui-sref="album({
+                id: album._id
+            })">
+            <h3>{{album.title}}</h3>
         </li>
     </ul>
 </section>

@@ -1,4 +1,9 @@
 <section>
-    <h3>{{$ctrl.album.title}}</h3>
-    <h2>Images</h2>
+    <h2>{{$ctrl.album.title}}</h2>
+    <h3>Images</h3>
+    
+    <image-app
+        images="$ctrl.album.images"
+        album="$ctrl.album._id">
+    </image-app>
 </section>
