@@ -9,7 +9,13 @@ export default function routes($stateProvider, $urlRouterProvider) {
     });
 
     $stateProvider.state({
-        name: 'image-app',
+        name: 'widget',
+        url: '/widget',
+        component: 'widget'
+    });
+
+    $stateProvider.state({
+        name: 'images',
         url: '/images',
         abstract: true,
         default: '.description',
@@ -18,23 +24,23 @@ export default function routes($stateProvider, $urlRouterProvider) {
                 return images.get();
             }]
         },
-        component: 'imageApp'
+        component: 'images'
     });
 
     $stateProvider.state({
-        name: 'image-app.description',
+        name: 'images.description',
         url:'/description',
         component: 'imageDescription'
     });
 
     $stateProvider.state({
-        name:'image-app.thumbnail',
+        name:'images.thumbnail',
         url: '/thumbnail',
         component: 'imageThumbnail'
     });
 
     $stateProvider.state({
-        name:'image-app.full',
+        name:'images.full',
         url: '/full',
         component: 'imageFull'
     });
