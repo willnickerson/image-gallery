@@ -1,4 +1,4 @@
-import template from './image-add.html';
+import template from './add-new.html';
 
 export default {
     template,

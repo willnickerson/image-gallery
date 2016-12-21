@@ -33,15 +33,5 @@ function controller(imageService, $state) {
                 const index = this.images.indexOf(image);
                 if(index > -1) this.images.splice(index, 1);
             });
-    };
-
-    this.add = image => {
-        this.loading = true;
-        imageService.add(image)
-            .then(saved => {
-                this.loading = false;
-                this.images.push(saved);
-            });
-    };
-    
+    };   
 }

@@ -10,12 +10,24 @@ export default {
 
 controller.$inject = ['albumService'];
 
-function controller(albums) {
+function controller(albumService) {
     this.loading = true;
 
-    albums.get().then(albums => {
-        console.log('albums getting loaded', albums);
+    albumService.get().then(albums => {
         this.loading = false;
         this.albums = albums;
     });
+
+    this.add = album => {
+        albumService.add(album)
+            .then(saved => this.albums.push(saved));
+    };
+
+    this.delete = album => {
+        albumService.remove(album._id)
+            .then(() => {
+                const index = this.albums.indexOf(album);
+                if(index > -1) this.albums.splice(index, 1);
+            });
+    };
 }

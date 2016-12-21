@@ -18,6 +18,7 @@ router
             Image.find({album}).lean()
         ])
             .then(([album, images]) => {
+                console.log('album images', images);
                 album.images = images;
                 res.send(album);
             })
@@ -31,6 +32,20 @@ router
     .post('/', bodyParser, (req, res, next) => {
         new Album(req.body).save()
             .then(album => res.send(album))
+            .catch(next);
+    })
+    .post('/:albumId', bodyParser, (req, res, next) => {
+        const image = req.body;
+        image.album = req.params.albumId;
+        new Image(image).save()
+            .then(image => res.send(image))
+            .catch(next);
+    })
+    .delete('/', (req, res, next) => {
+        Album.remove()
+            .then(() => {
+                res.send('All albums deleted');
+            })
             .catch(next);
     });
 

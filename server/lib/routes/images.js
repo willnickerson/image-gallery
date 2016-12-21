@@ -21,13 +21,11 @@ router
             .then(image => res.send(image))
             .catch(next);
     })
-    .put('/:imgId/albums/:albumId', (req, res, next) => {
-        Image.findById(req.params.imgId)
-            .then(image => {
-                image.album = req.params.albumId;
-                return image.save();
+    .delete('/', (req, res, next) => {
+        Image.remove()
+            .then(() => {
+                res.send('All images deleted');
             })
-            .then(saved => res.send(saved))
             .catch(next);
     });
 module.exports = router;

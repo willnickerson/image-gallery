@@ -4,7 +4,10 @@ export default function imageService($http, apiUrl) {
     return {
         get() {
             return $http.get(`${apiUrl}/images`)
-                .then(res => res.data);
+                .then(res => {
+                    console.log(res.data);
+                    return res.data;
+                });
         },
         remove(id) {
             return $http.delete(`${apiUrl}/images/${id}`)
@@ -12,10 +15,6 @@ export default function imageService($http, apiUrl) {
         },
         add(image) {
             return $http.post(`${apiUrl}/images`, image)
-                .then(res => res.data);
-        },
-        addToAlbum(imgId, albumId) {
-            return $http.put(`${apiUrl}/images/${imgId}/albums/${albumId}`)
                 .then(res => res.data);
         }
     };
