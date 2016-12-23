@@ -33002,9 +33002,9 @@
 		"./about/about.js": 12,
 		"./app/app.js": 14,
 		"./welcome/welcome.js": 20,
-		"./widget/albums/album/album.js": 22,
-		"./widget/albums/albums.js": 24,
-		"./widget/images/image-add/image-add.js": 26,
+		"./widget/add-new/add-new.js": 22,
+		"./widget/albums/album/album.js": 24,
+		"./widget/albums/albums.js": 26,
 		"./widget/images/image-description/image-description.js": 28,
 		"./widget/images/image-full/image-full.js": 32,
 		"./widget/images/image-thumbnail/image-thumbnail.js": 36,
@@ -33144,7 +33144,7 @@
 /* 15 */
 /***/ function(module, exports) {
 
-	module.exports = "<header>\n    <h1>Image Widget</h1>\n    <nav>\n        <a ui-sref=\"welcome\">Home</a>\n        <a ui-sref=\"widget\">Images</a>\n        <a ui-sref=\"albums\">Albums</a>\n        <a ui-sref=\"about\">About</a>\n    </nav>\n</header>\n\n<main>\n    <ui-view></ui-view>\n</main>\n\n";
+	module.exports = "<header>\n    <h1>Image Widget</h1>\n    <nav>\n        <a ui-sref=\"welcome\">Home</a>\n        <a ui-sref=\"images\">Images</a>\n        <a ui-sref=\"albums\">Albums</a>\n        <a ui-sref=\"about\">About</a>\n    </nav>\n</header>\n\n<main>\n    <ui-view></ui-view>\n</main>\n\n";
 
 /***/ },
 /* 16 */
@@ -33531,98 +33531,14 @@
 	    value: true
 	});
 	
-	var _album = __webpack_require__(23);
+	var _addNew = __webpack_require__(23);
 	
-	var _album2 = _interopRequireDefault(_album);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	    template: _album2.default,
-	    bindings: {
-	        album: '<'
-	    },
-	    controller: controller
-	};
-	
-	
-	function controller() {
-	    var _this = this;
-	
-	    this.uiOnParamsChanged = function (params) {
-	        _this.view = params.view;
-	    };
-	}
-
-/***/ },
-/* 23 */
-/***/ function(module, exports) {
-
-	module.exports = "<section>\n    <h2>{{$ctrl.album.title}}</h2>\n    <h3>Images</h3>\n\n    <images\n        images=\"$ctrl.album.images\"\n        album=\"$ctrl.album._id\">\n    </images>\n</section>";
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _albums = __webpack_require__(25);
-	
-	var _albums2 = _interopRequireDefault(_albums);
+	var _addNew2 = _interopRequireDefault(_addNew);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
-	    template: _albums2.default,
-	    bindings: {
-	        album: '<'
-	    },
-	    controller: controller
-	};
-	
-	
-	controller.$inject = ['albumService'];
-	
-	function controller(albums) {
-	    var _this = this;
-	
-	    this.loading = true;
-	
-	    albums.get().then(function (albums) {
-	        console.log('albums getting loaded', albums);
-	        _this.loading = false;
-	        _this.albums = albums;
-	    });
-	}
-
-/***/ },
-/* 25 */
-/***/ function(module, exports) {
-
-	module.exports = "<section>\n    <div class=\"loader\" ng-if=\"$ctrl.loading\">...Loading</div>\n    <h2>Albums</h2>\n\n    <ul>\n        <li ng-repeat=\"album in $ctrl.albums\"\n            ui-sref=\"album({\n                id: album._id\n            })\">\n            <h3>{{album.title}}</h3>\n        </li>\n    </ul>\n</section>\n\n\n";
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _imageAdd = __webpack_require__(27);
-	
-	var _imageAdd2 = _interopRequireDefault(_imageAdd);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	    template: _imageAdd2.default,
+	    template: _addNew2.default,
 	    bindings: {
 	        _fields: '@fields',
 	        add: '<'
@@ -33652,10 +33568,115 @@
 	}
 
 /***/ },
-/* 27 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports = "<section>\n    <form ng-submit=\"$ctrl.submit()\">\n        <div ng-repeat=\"field in $ctrl.fields\">\n            <label>{{field}}:</label>\n            <input type=\"text\" ng-model=\"$ctrl.item[field]\">\n        </div>\n        <button>Add</button>\n    </form>\n</section>";
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _album = __webpack_require__(25);
+	
+	var _album2 = _interopRequireDefault(_album);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	    template: _album2.default,
+	    bindings: {
+	        album: '<'
+	    },
+	    controller: controller
+	};
+	
+	
+	controller.$inject = ['albumService'];
+	
+	function controller(albumService) {
+	    var _this = this;
+	
+	    this.uiOnParamsChanged = function (params) {
+	        _this.view = params.view;
+	    };
+	
+	    this.add = function (image) {
+	        console.log(_this.album);
+	        albumService.addNewImage(_this.album._id, image).then(function (saved) {
+	            return _this.album.images.push(saved);
+	        });
+	    };
+	}
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	module.exports = "<section>\n    <h2>{{$ctrl.album.title}}</h2>\n    <h3>Images</h3>\n\n    <images\n        images=\"$ctrl.album.images\"\n        album=\"$ctrl.album._id\">\n    </images>\n\n    <add-new fields=\"title, description, url\" add=\"$ctrl.add\"></add-new>\n</section>";
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _albums = __webpack_require__(27);
+	
+	var _albums2 = _interopRequireDefault(_albums);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	    template: _albums2.default,
+	    bindings: {
+	        album: '<'
+	    },
+	    controller: controller
+	};
+	
+	
+	controller.$inject = ['albumService'];
+	
+	function controller(albumService) {
+	    var _this = this;
+	
+	    this.loading = true;
+	
+	    albumService.get().then(function (albums) {
+	        _this.loading = false;
+	        _this.albums = albums;
+	    });
+	
+	    this.add = function (album) {
+	        albumService.add(album).then(function (saved) {
+	            return _this.albums.push(saved);
+	        });
+	    };
+	
+	    this.delete = function (album) {
+	        albumService.remove(album._id).then(function () {
+	            var index = _this.albums.indexOf(album);
+	            if (index > -1) _this.albums.splice(index, 1);
+	        });
+	    };
+	}
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	module.exports = "<section>\n    <div class=\"loader\" ng-if=\"$ctrl.loading\">...Loading</div>\n    <h2>Albums</h2>\n    <ul>\n        <li ng-repeat=\"album in $ctrl.albums\">\n            <h3 ui-sref=\"album({\n                id: album._id})\">\n            {{album.title}}\n            </h3>\n            <button ng-click=\"$ctrl.delete(album)\">Delete</button>\n        </li>\n    </ul>\n\n    <add-new fields=\"title, thumbnail\", add=\"$ctrl.add\"></add-new>\n</section>\n\n\n";
 
 /***/ },
 /* 28 */
@@ -33952,21 +33973,13 @@
 	            if (index > -1) _this.images.splice(index, 1);
 	        });
 	    };
-	
-	    this.add = function (image) {
-	        _this.loading = true;
-	        imageService.add(image).then(function (saved) {
-	            _this.loading = false;
-	            _this.images.push(saved);
-	        });
-	    };
 	}
 
 /***/ },
 /* 41 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul>\n    <a class=\"view-toggle\" ng-click=\"app.setView('description')\">Descritption</a>\n    <a class=\"view-toggle\" ng-click=\"app.setView('thumbnail')\">Thumbnail</a>\n    <a class=\"view-toggle\" ng-click=\"app.setView('full')\">Full-Size</a>\n</ul>\n\n<section>\n    <ui-view></ui-view>\n</section>\n\n<image-add fields=\"title, description, url\" add=\"app.add\"></image-add>\n\n";
+	module.exports = "<ul>\n    <a class=\"view-toggle\" ng-click=\"app.setView('description')\">Descritption</a>\n    <a class=\"view-toggle\" ng-click=\"app.setView('thumbnail')\">Thumbnail</a>\n    <a class=\"view-toggle\" ng-click=\"app.setView('full')\">Full-Size</a>\n</ul>\n\n<section>\n    <ui-view></ui-view>\n</section>\n\n<!--<image-add fields=\"title, description, url\" add=\"app.add\"></image-add>-->\n\n";
 
 /***/ },
 /* 42 */
@@ -34125,6 +34138,11 @@
 	            return $http.post(apiUrl + '/albums', album).then(function (res) {
 	                return res.data;
 	            });
+	        },
+	        addNewImage: function addNewImage(id, image) {
+	            return $http.post(apiUrl + '/albums/' + id, image).then(function (res) {
+	                return res.data;
+	            });
 	        }
 	    };
 	}
@@ -34145,6 +34163,7 @@
 	    return {
 	        get: function get() {
 	            return $http.get(apiUrl + '/images').then(function (res) {
+	                console.log(res.data);
 	                return res.data;
 	            });
 	        },
@@ -34155,11 +34174,6 @@
 	        },
 	        add: function add(image) {
 	            return $http.post(apiUrl + '/images', image).then(function (res) {
-	                return res.data;
-	            });
-	        },
-	        addToAlbum: function addToAlbum(imgId, albumId) {
-	            return $http.put(apiUrl + '/images/' + imgId + '/albums/' + albumId).then(function (res) {
 	                return res.data;
 	            });
 	        }
