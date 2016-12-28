@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "karma start --single-run",
+    "test": "karma start --single-run && npm run e2e",
     "build": "webpack",
     "start": "webpack-dev-server --inline",
     "update-webdriver": "webdriver-manager update",
+    "pree2e": "babel test-e2e-src --out-dir test-e2e",
     "e2e": "protractor",
     "e2e-explore": "protractor --elementExplore"
   },
