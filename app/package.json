@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "karma start --single-run && npm run e2e",
+    "test": "karma start --single-run",
     "build": "webpack",
     "start": "webpack-dev-server --inline",
     "update-webdriver": "webdriver-manager update",
